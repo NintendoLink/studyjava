@@ -1,4 +1,4 @@
-package com.study.spring;
+package com.study.spring.example;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -8,8 +8,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan
+/**
+ * @Configuration
+ * @ComponentScan
+ * Spring官方实例
+ */
 public class Application {
-
     @Bean
     MessageService mockMessageService(){
         return new MessageService() {
