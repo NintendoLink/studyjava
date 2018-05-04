@@ -11,24 +11,22 @@ stanforNLP
 * depparse(Dependency Parse):依存句法分析
 ---
 ### 构件坐标
-* 算法核心jar
+* 算法核心jar，stanford核心jar包，包括一些常用的处理工具
 >           <dependency>
 >               <groupId>edu.stanford.nlp</groupId>
 >               <artifactId>stanford-corenlp</artifactId>
 >               <version>${stanfordNLP.Version}</version>
 >           </dependency>
 
-stanford核心jar包，包括一些常用的处理工具
-
-* 模型核心
+* 模型核心，同样是核心jar，一些模型文件
 >        <dependency>
 >            <groupId>edu.stanford.nlp</groupId>
 >            <artifactId>stanford-corenlp</artifactId>
 >            <version>${stanfordNLP.Version}</version>
 >            <classifier>models</classifier>
 >        </dependency>
-同样是核心jar，一些模型文件
-* 可选语言模型	
+
+* 可选语言模型	，可选择jar，如果遇到中文的处理，必须加入此jar，不然无法处理，同样如果有其他语言可以把model替换成model-language。
 >        <dependency>
 >            <groupId>edu.stanford.nlp</groupId>
 >            <artifactId>stanford-corenlp</artifactId>
@@ -74,7 +72,7 @@ stanford核心jar包，包括一些常用的处理工具
           System.out.println();
 
 当需要哪个功能时，需要将annotators中加入即可(因为加载模型的原因，运行速度很慢，可能会出现heapsize异常，需要调整jvm运行参数)
-[使用standard Api](https://stanfordnlp.github.io/CoreNLP/api.html)
+* [使用standard Api](https://stanfordnlp.github.io/CoreNLP/api.html)
 ---
 ### coreNLP server
 1.除了控制台使用标准api调用StanfordNLP接口之外，stanfordNLP还提供了另外一种使用调用方式：搭建本地coreNLP server，对外提供http post和java client调用方式。
@@ -89,10 +87,14 @@ stanford核心jar包，包括一些常用的处理工具
 * 可以在浏览器中打开localhost:9000,然后post data，直接可视化展示careNLP调用结果
 * 模拟post请求，接收调用结果,可以linux下的wget和curl模拟post请求
 wget方式
-> wget --post-data 'The quick brown fox jumped over the lazy dog.' 'localhost:9000/?properties={"annotators":"tokenize,ssplit,pos","outputFormat":"json"}' -O -
+> 
+    
+    wget --post-data 'The quick brown fox jumped over the lazy dog.' 'localhost:9000/?properties={"annotators":"tokenize,ssplit,pos","outputFormat":"json"}' -O -
 
 curl方式
-> curl --data 'The quick brown fox jumped over the lazy dog.' 'http://localhost:9000/?properties={%22annotators%22%3A%22tokenize%2Cssplit%2Cpos%22%2C%22outputFormat%22%3A%22json%22}' -o -
+> 
+
+    curl --data 'The quick brown fox jumped over the lazy dog.' 'http://localhost:9000/?properties={%22annotators%22%3A%22tokenize%2Cssplit%2Cpos%22%2C%22outputFormat%22%3A%22json%22}' -o -
 
 * 利用java client发送数据，接收请求结果。这样做的好处：不用每次都加载模型？
 > * The models are not re-loaded every time your program runs. This is useful when debugging a block of code which runs CoreNLP annotations, as the CoreNLP models often take on the order of minutes to load from disk.
@@ -111,10 +113,10 @@ example(来自官方)：
 注：这种方式尝试后未果，在启动server之后的第一次java client访问后,client会抛出
 > 
     
-    java.lang.NoClassDefFoundError:com/google/protobuf/GeneratedMessageV3$E			xtendableMessageOrBuilder
+    java.lang.NoClassDefFoundError:com/google/protobuf/GeneratedMessageV3$ExtendableMessageOrBuilder
 在之后的访问中，server会抛出
 >
     
     java.lang.NoClassDefFoundError:edu/stanford/nlp/pipeline/CoreNLPProtos$Docume
     
-[coreNLP server搭建](https://stanfordnlp.github.io/CoreNLP/corenlp-server.html)
+* [coreNLP server搭建](https://stanfordnlp.github.io/CoreNLP/corenlp-server.html)
